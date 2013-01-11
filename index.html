@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Fractal Architecture Manifesto by lvh</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Fractal Architecture Manifesto</h1>
+        <p>An alternative to classic multi-layered application architectures</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/lvh/fractal-architectures" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/lvh/fractal-architectures/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/lvh/fractal-architectures/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <p>This is very much a work in progress.</p>
+
+<h1>Abstract</h1>
+
+<p>A fractal architecture is an application architecture based on intercommunicating, loosely-coupled, repeating and self-contained units.</p>
+
+<h1>Maxims</h1>
+
+<ol>
+<li>Decentralized over centralized</li>
+<li>Local over global</li>
+<li>Verbs over nouns</li>
+</ol><h1>Tenets</h1>
+
+<h2>State</h2>
+
+<p>State is a necessary evil. It gets progressively worse as its scope increases, doubly so if it is mutable. However, pretending it simply doesn't exist is impractical.</p>
+
+<p>A fractal architecture embraces, contains and limits state.</p>
+
+<h2>Communication</h2>
+
+<p>Since a fractal architecture-based application is effectively a number of bubbles of state communicating with each other, remote procedure calls end up making a lot more sense than representational state transfer.</p>
+
+<p>This is in essence very similar to the actor model of concurrency. Actors are typically smaller than the shards in a fractal architecture: the things being promoted to first class citizens are closer to E's vats than E's objects.</p>
+
+<h1>Benefits</h1>
+
+<h2>Data locality</h2>
+
+<p>It's hard to compete with the performance, particularly the latency, of a small, local SQLite database.</p>
+
+<h2>Cost</h2>
+
+<h2>Scalability</h2>
+
+<p>Few things scale down better than local SQLite databases.</p>
+
+<h1>Downsides</h1>
+
+<h2>Complexities of a distributed system</h2>
+
+<h2>Unfamiliarity and lack of tooling</h2>
+
+<p>Because this is not the de facto standard, there is significantly less existing work to fall back on.</p>
+
+<p>Most people are afraid of the unfamiliar.</p>
+
+<h1>Tools</h1>
+
+<p>A myriad of tools can be used to accomplish these tasks, but some are more naturally suited to it than others. For example:</p>
+
+<ul>
+<li>SQLite is a fantastic data store for use cases where you have a large number of small and mobile databases. It's highly performant to boot.</li>
+<li>Event-loop based systems tend to be better suited to the high level of inter-node communication. The author has had personal successes with Twisted, which comes with an implementation nice full-duplex RPC mechanism called AMP, and a distributed computing/remote objects system called Perspective Broker.</li>
+</ul><h1>Further reading</h1>
+
+<p>The author has given <a href="https://www.youtube.com/watch?v=w75TAXYZnNs">a presentation at PyCon ZA</a> on this subject.</p>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/lvh">lvh</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
