@@ -39,7 +39,7 @@
         <ul></ul>
       </nav>
       <section>
-        <p>This is very much a work in progress.</p>
+        <p>This is very much a work in progress. I intend to move individual points to more detailed posts as I elaborate on them.</p>
 
 <h1>Abstract</h1>
 
@@ -50,51 +50,55 @@
 <ol>
 <li>Decentralized over centralized</li>
 <li>Local over global</li>
-<li>Verbs over nouns</li>
+<li>(Verbs over nouns)</li>
 </ol><h1>Tenets</h1>
 
 <h2>State</h2>
 
-<p>State is a necessary evil. It gets progressively worse as its scope increases, doubly so if it is mutable. However, pretending it simply doesn't exist is impractical.</p>
+<p>State is a necessary evil. It gets progressively worse as its scope increases, doubly so if it is mutable. However, pretending it simply doesn't exist is impractical. A fractal architecture embraces, contains and limits state.</p>
 
-<p>A fractal architecture embraces, contains and limits state.</p>
+<p>All state should be contained in a store specific to some business concept. A typical example is users, but other kinds of stores can exist simultaneously.</p>
 
 <h2>Communication</h2>
 
 <p>Since a fractal architecture-based application is effectively a number of bubbles of state communicating with each other, remote procedure calls end up making a lot more sense than representational state transfer.</p>
 
+<p>The author also personally finds these APIs simpler to build and maintain compared to REST ones. Many things fit well into CRUD. Some things don't. Sometimes, you just end up shoehorning something onto REST; or the 'REST' API ends up being little more than methods addressed by URL and called using POST requests. </p>
+
 <p>This is in essence very similar to the actor model of concurrency. Actors are typically smaller than the shards in a fractal architecture: the things being promoted to first class citizens are closer to E's vats than E's objects.</p>
 
 <h1>Benefits</h1>
 
-<h2>Data locality</h2>
+<ul>
+<li>Scaling both up and down easily. If your machines have temporary, ephemeral links to a particular store, and any other machine should be able to take their place near-instantly, it should also be easy to add and remove machines.</li>
+<li>Data locality. Apps that are well suited to this design tend to have a lot of operations being on a particular store.</li>
+<li>Ease of implementation. RPC methods tend to have short, obvious implementations, even when the verb does not clearly map to a CRUD operation. This tends to lead to easier to maintain code with less bugs in it.</li>
+<li>Easier development, staging and production parity. While not being an excuse for not having proper testing and CI, even on developer's machines, using tools that are consistent makes it a lot easier to have a shorter feedback loop.</li>
+<li>Performance. It's very hard to compete with an API server running queries on a small, local SQLite database.</li>
+<li>Lower cost. This is a consequence of several factors:
 
-<p>It's hard to compete with the performance, particularly the latency, of a small, local SQLite database.</p>
+<ul>
+<li>Data locality: cold data can be moved to high latency, high redundancy stores.</li>
+<li>Performance: higher performance means less machines meaning a lower hosting bill.</li>
+</ul>
+</li>
+</ul><h1>Downsides</h1>
 
-<h2>Cost</h2>
-
-<h2>Scalability</h2>
-
-<p>Few things scale down better than local SQLite databases.</p>
-
-<h1>Downsides</h1>
-
-<h2>Complexities of a distributed system</h2>
-
-<h2>Unfamiliarity and lack of tooling</h2>
-
-<p>Because this is not the de facto standard, there is significantly less existing work to fall back on.</p>
-
-<p>Most people are afraid of the unfamiliar.</p>
-
-<h1>Tools</h1>
+<ul>
+<li>Unfamiliarity. Because this is not the de facto standard of web servers translating requests into database operations, there is significantly less existing work to fall back on. That said, many of the tools being used should be quite familiar, e.g. SQLite.</li>
+<li>Added complexities of a distributed system once more than one machine is required to handle the load.</li>
+<li>Difficulty of dealing with shared data. There are at least three approaches to doing this, and it's not always obvious which one is superior. This is somewhat related to the complexities of a distributed system.</li>
+<li>Complexity of data redundancy. Assuming nodes have ephemeral local storage, a node going down means the local store is lost. Either the individual nodes have fairly reliable local storage, or the long-term storage has to be updated sufficiently often for catastrophic failure in a node to not cause unacceptable data loss (or some combination of both). Taking snapshots of a store actively being written to is an open problem; perhaps filesystem snapshots can provide an answer to this, although it may not be satisfactory </li>
+</ul><h1>Tools</h1>
 
 <p>A myriad of tools can be used to accomplish these tasks, but some are more naturally suited to it than others. For example:</p>
 
 <ul>
 <li>SQLite is a fantastic data store for use cases where you have a large number of small and mobile databases. It's highly performant to boot.</li>
 <li>Event-loop based systems tend to be better suited to the high level of inter-node communication. The author has had personal successes with Twisted, which comes with an implementation nice full-duplex RPC mechanism called AMP, and a distributed computing/remote objects system called Perspective Broker.</li>
-</ul><h1>Further reading</h1>
+</ul><p>The author is writing a framework for doing this using Twisted and Axiom, a simple object store over SQLite.</p>
+
+<h1>Further reading</h1>
 
 <p>The author has given <a href="https://www.youtube.com/watch?v=w75TAXYZnNs">a presentation at PyCon ZA</a> on this subject.</p>
       </section>
